@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Medi Counsel — Feed</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>Medi Counsel</h1>
+    <nav>
+      <a href="{{ url_for('index') }}">Journal</a>
+      <a href="{{ url_for('feed') }}" class="active">Community Feed</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Recent Anonymous Shares</h2>
+      {% if entries %}
+        <ul class="feed">
+        {% for e in entries %}
+          <li class="feed-item">
+            <div class="meta">
+              <span class="alias">{{ e.user_alias }}</span>
+              <span class="time">{{ e.created_at }}</span>
+              <span class="badge">{{ e.emotion_label }}</span>
+            </div>
+            <p class="snippet">{{ e.snippet }}{% if e.snippet|length == 280 %}…{% endif %}</p>
+          </li>
+        {% endfor %}
+        </ul>
+      {% else %}
+        <p>No entries yet. Be the first to share something (anonymously).</p>
+      {% endif %}
+    </section>
+  </main>
+
+  <footer>
+    <small>We see you. We hear you. 💛</small>
+  </footer>
+</body>
+</html>
